@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>添加虚拟机</title>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/index}">首页</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/main}">虚拟机基础管理<span class="sr-only">(current)</span></a></li>
+                <li class="active"><a th:href="@{/toAddVirtual}">添加虚拟机</a></li>
+                <li><a th:href="@{/img}">镜像管理</a></li>
+                <li><a th:href="@{/toAddImg}">添加镜像</a></li>
+                <li><a th:href="@{/storagePoolList}">存储池管理</a></li>
+                <li><a th:href="@{/toCreateStoragepool}">添加存储池</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/openOrCloseNetWork(netState=${netState})}" th:inline="text">网络状态：[[${netState}]]</a></li>
+                <li><a th:href="@{/loginOut}">注销登录</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div align="center" class="center">
+    <form class="form-inline" role="form" th:action="@{/addVirtual}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="sr-only" for="virtualName">虚拟机名称</label>
+            <input type="text" class="from-control" id="virtualName" name="virtualName" placeholder="请输入虚拟机名称"
+                   required=""/>
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="file">选择镜像文件</label>
+            <input type="file" id="file" name="file" required=""/><br/>
+        </div>
+        <button type="submit" class="btn btn-default">提交</button>
+    </form>
+</div>
+
+</body>
+</html>

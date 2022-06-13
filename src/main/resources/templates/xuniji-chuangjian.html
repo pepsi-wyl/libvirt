@@ -1,0 +1,318 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
+
+    <title>虚拟化管理平台</title>
+
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+
+    <link th:href="@{bootstrap/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
+    <link th:href="@{css/style.css}" rel="stylesheet"/>
+    <link th:href="@{bootstrap-table/bootstrap-table.min.css}" rel="stylesheet"/>
+
+	<style>
+		.inplabel {
+			text-align: right;
+		}
+		.modal-body {
+			height: 172px;
+		}
+		.form-group {
+			height: 35px;
+			line-height: 35px;
+			width: 130%;
+		}
+		.alert {
+			position: fixed;
+			width: 50%;
+			top: 10px;
+			left: 25%;
+			z-index: 1111;
+		}
+		.username {
+			font-size: 18px;
+			margin-right: 10px;
+			position: relative;
+			top: -2px;
+		}
+		.nav-header {
+			padding-left: 10px;
+		}
+		.modal-body .form-control {
+			width: 50%;
+		}
+		/*333*/
+		.ibox-title h5 {
+    		color: rgb(125, 171, 206);
+    		font-size: 17px;
+    		font-weight: normal;
+    	}
+    	.ibox-content-title {
+    		color: rgb(154, 192, 132);
+    		font-size: 15px;
+    	}
+    	textarea {
+    		border-color: rgb(218, 218, 218);
+    		overflow: auto;
+    	}
+    	.cancel_btn {
+    		background: rgb(110, 179, 225);
+    		color: #fff;
+    		border-radius: 0;
+    	}
+    	.save_btn {
+    		background: rgb(149, 133, 191);
+    		color: #fff;
+    		border-radius: 0;
+    	}
+    	.form-horizontal .form-group {
+    		margin: 0px;
+    	}
+		/*333*/
+	</style>
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+    <div id="wrapper">
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                        	<!-- START提示信息-->
+                        	<div style="display: none;" class="alert alert-success alert-dismissable" id="success">
+						        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+						        用户修改密码添加成功 
+						    </div>
+                        	<div class="alert alert-danger alert-dismissable" id="fail"  style="display: none;">
+						        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+						        用户修改密码失败！ 
+						    </div>
+						    <!-- END提示信息 -->
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                    <span class="block m-t-xs" style="font-size:20px;">
+                                        <strong class="font-bold">虚拟化管理平台</strong>
+                                    </span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="logo-element">虚拟化管理平台
+                        </div>
+                    </li>
+                    <li class="line dk"></li>
+                    <!--宿主机管理器-->
+                    <li>
+                        <a href="/">
+                            <i class="fa fa-desktop" aria-hidden="true"></i>
+                            <span class="nav-label">宿主机管理</span>
+                        </a>
+                    </li>
+                    <!--//宿主机管理器-->
+                    <li class="line dk"></li>
+                    <!--虚拟机实例-->
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-desktop" aria-hidden="true"></i>
+                            <span class="nav-label">虚拟机实例</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="/domainlist">实例管理</a>
+                            </li>
+                            <li>
+                                <a href="/adddomain">创建实例</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--//虚拟机实例-->
+                    <li class="line dk"></li>
+                    <!--存储池管理-->
+                    <li>
+                        <a href="/poollist">
+                            <i class="fa fa-desktop" aria-hidden="true"></i>
+                            <span class="nav-label">存储池管理</span>
+                        </a>
+                    </li>
+                    <!--//存储池管理-->
+                    <li class="line dk"></li>
+                    <!--网络管理-->
+                    <li>
+                        <a href="/netlist">
+                            <i class="fa fa-desktop" aria-hidden="true"></i>
+                            <span class="nav-user">网络管理</span>
+                        </a>
+                    </li>
+                    <!--//网络管理-->
+                    <li class="line dk"></li>
+                </ul>
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#"><i class="fa fa-bars"></i> </a>
+                        <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
+                            <div class="form-group">
+                                <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search"/>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <ul class="nav navbar-top-links navbar-right pull-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <!-- <i class="fa fa-sign-out fa-lg"></i>  -->
+                                <span class="username">系统管理员</span>
+                                <span class="username">#(session.admin.name)</span>                                
+                                <i class="fa fa-user-circle-o" aria-hidden="true" style="font-size: 25px;"></i> 
+                            </a>
+                            <ul class="dropdown-menu dropdown-messages">
+                                <li class="m-t-xs">
+                                    <div class="dropdown-messages-box">
+                                        <div class="media-body" data-toggle="modal" data-target="#updateModal">
+                                            <strong>修改</strong> 
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div onclick="logout()" class="dropdown-messages-box">
+                                        <div class="media-body ">
+                                            <strong>退出</strong> 
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </div>
+            <div class="row J_mainContent" id="content-main">
+                <!--<iframe id="J_iframe" width="100%" height="100%" src="host.html" frameborder="0" data-id="welcome.html" seamless></iframe>-->
+                <div class="wrapper wrapper-content animated fadeInRight">
+			    	<div style="display: none;" class="alert alert-success alert-dismissable" id="success">
+				        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+				        添加成功 
+				    </div>
+			    	<div style="display: none;" class="alert alert-danger alert-dismissable" id="fail">
+				        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+				        添加失败！ 
+				    </div>
+				    <div style="display: none;" class="alert alert-success alert-dismissable" id="updatesuccess">
+				        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+				        修改成功 
+				    </div>
+				    <div style="display: none;" class="alert alert-success alert-dismissable" id="updateexist">
+				        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+				        班级已存在
+				    </div>
+			    	<div style="display: none;" class="alert alert-danger alert-dismissable" id="updatefail">
+				        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+				        修改失败！ 
+				    </div>
+			        <div class="row">
+			            <div class="col-sm-12 col-md-12">
+			                <div class="ibox float-e-margins">
+			                    <div class="ibox-title">
+			                        <h5>
+			                        	<i class="fa fa-cog" aria-hidden="true"></i>
+			                        	&nbsp;新增虚拟机
+			                        </h5>
+			                    </div>
+			                    <div class="ibox-content">
+			                    	<span class="ibox-content-title">XML Editor</span>
+			                    	<div class="hr-line-dashed"></div>
+			                        <form  action="/addomain" method="post" id="addClassForm" class="form-horizontal">
+			                        	<!--XML内容-->
+			                        	<textarea id="xmlcontent" class="col-sm-12 col-md-12" name="xml" rows="25" cols=""></textarea>
+			                            <div class="hr-line-dashed"></div>
+			                            <div class="" style="text-align: center;">
+			                                <input type="button" onclick="window.history.back();" class="btn btn-white cancel_btn pull-left" value="撤销"/>
+			                                <input type="submit" onclick="updateClass()" id="save_btn" class="btn btn-primary save_btn pull-right" value="添加"/>
+			                            </div>
+				                       
+			                        </form>
+			                        
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			    <!--333-->
+            </div>
+        </div>
+        <!--右侧部分结束-->
+    </div>
+    
+    <!-- 模态框（Modal） -->
+	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">修改用户密码</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<div class="form-group">
+                        <label class="col-sm-3 col-md-3 control-label inplabel">密码:</label>
+                        <div class="col-sm-9 col-md-9">
+                            <input type="password" name="oldpsd" id="oldpsd" class="form-control input"  onblur="checkOldpsd()"/>
+                       		<span style="display: none;" id="oldpsdError" class="error">密码错误</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 control-label inplabel">新密码:</label>
+                        <div class="col-sm-9 col-md-9">
+                            <input type="password" name="newpsd" id="newpsd" class="form-control input"  onblur="checkNewpsd()"/>
+                            <span style="display: none;" id="newpsdError" class="error">5-12位字母/数字</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-3 control-label inplabel">确认密码:</label>
+                        <div class="col-sm-9 col-md-9">
+                            <input type="password" name="repsd" id="repsd" class="form-control input"  onblur="checkRepsd()"/>
+                            <span style="display: none;" id="repsdError" class="error">两次输入密码不一致</span>
+                        </div>
+                    </div>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	                <button type="button" class="btn btn-primary" onclick="updatePsd()">提交更改</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
+	</div>
+
+    <script th:src="@{jquery/jquery.min.js}"></script>
+    <script th:src="@{bootstrap/bootstrap.min.js}"></script>
+    <script th:src="@{metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{slimscroll/jquery.slimscroll.min.js}"></script>
+    <script th:src="@{js/hAdmin.js}"></script>
+    <script th:src="@{js/index.js}"></script>
+    <script th:src="@{bootstrap-table/bootstrap-table.min.js}"></script>
+    <script th:src="@{bootstrap-table/bootstrap-table.js}"></script>
+    <script th:src="@{bootstrap-table/bootstrap-table-zh-CN.min.js}"></script>
+    <script th:src="@{js/class-list-demo.js}"></script>
+
+    <script>
+		$(".ibox-content").height($("#xmlcontent").height()+120);
+    </script>
+</body>
+
+</html>

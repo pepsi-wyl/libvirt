@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>云平台管理系统</title>
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+          type="text/css"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{css/styleindex.css}" rel="stylesheet"/>
+    <!--    <link th:href="@{/css/signin.css}" rel="stylesheet"/>-->
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script th:href="@{js/scripts.js}"></script>
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</head>
+<body id="page-top">
+
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="#page-top">云平台管理系统</a>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/main}">云平台管理</a>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/loginOut}">注销登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--Masthead-->
+<header class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">
+        <!-- Masthead Heading-->
+        <h1 class="masthead-heading text-uppercase mb-0">云平台管理系统</h1>
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- Masthead Subheading-->
+        <p class="masthead-subheading font-weight-light mb-0">SpringBoot + Thymeleaf + HTML+BootStrap + Libvirt +
+            Sigar</p>
+    </div>
+</header>
+<!-- Portfolio Section-->
+<section class="page-section portfolio" id="portfolio">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- Portfolio Item 1-->
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i
+                                class="fas fa-plus fa-3x"></i></div>
+                    </div>
+                    <!--                    <p class="mb-5">宿主机详细信息</p>-->
+                    <img class="img-fluid" th:src="@{img/index1.png}" alt="..."/>
+                </div>
+            </div>
+            <!-- Portfolio Item 2-->
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal2">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i
+                                class="fas fa-plus fa-3x"></i></div>
+                    </div>
+                    <!--                    <p class="mb-5">Libvirt连接信息</p>-->
+                    <img class="img-fluid" th:src="@{img/index.png}" alt="..."/>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Copyright Section-->
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>© 2022 design by wyl</small></div>
+</div>
+<!-- Portfolio Modals-->
+<!-- Portfolio Modal 1-->
+<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <h5>版本信息</h5>
+                            <p class="mb-3" th:inline="text">型号：[[${hostinfo.vendor}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数字版本：[[${hostinfo.vendorVersion}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文字版本：[[${hostinfo.vendorCodeName}]]&nbsp;&nbsp;&nbsp;内核版本：[[${hostinfo.version}]]</p>
+                            <h5>内存信息</h5>
+                            <p class="mb-3" th:inline="text">内存：[[${hostinfo.memory}]]k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用内存：[[${hostinfo.memoryUsed}]]k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可用内存：[[${hostinfo.memoryFree}]]k</p>
+                            <p class="mb-3" th:inline="text">交换空间：[[${hostinfo.swap}]]k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用交换空间：[[${hostinfo.swapUsed}]]k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可用交换空间：[[${hostinfo.swapFree}]]k</p>
+                            <h5>CPU信息</h5>
+                            <p class="mb-4" th:inline="text">宿主机CPU数量：[[${hostinfo.cpuNum}]]个&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPU型号：[[${hostinfo.cpuModel}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPU频率：[[${hostinfo.cpuMhz}]]Mhz</p>
+                            <h5>磁盘信息</h5>
+                            <p class="mb-4" th:inline="text">设备名称：[[${hostinfo.devName}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设备目录：[[${hostinfo.dirName}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;磁盘总量：[[${hostinfo.fileTotal}]]KB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <br/>使用：[[${hostinfo.fileUsed}]]KB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用率：[[${hostinfo.fileUsePercent}]]%
+                            </p>
+                            <h5>网络信息</h5>
+                            <p class="mb-4" th:inline="text">网卡描述：[[${hostinfo.netDescription}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网卡类型：[[${hostinfo.netType}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IP地址：[[${hostinfo.netIP}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <br/>
+                                MAC地址：[[${hostinfo.netMAC}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mask掩码：[[${hostinfo.netMask}]]
+                            </p>
+                            <button class="btn btn-primary" data-bs-dismiss="modal">
+                                <i class="fas fa-xmark fa-fw"></i>
+                                关闭窗口
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Portfolio Modal 2-->
+<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" aria-labelledby="portfolioModal2"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <h5>Libvirt连接信息</h5>
+                            <p class="mb-4" th:inline="text">主机名称：[[${connectInformation.hostName}]]</p>
+                            <p class="mb-4" th:inline="text">连接URL：[[${connectInformation.url}]]</p>
+                            <p class="mb-4" th:inline="text">libVir版本：[[${connectInformation.libVirVersion}]]</p>
+                            <p class="mb-4" th:inline="text">
+                                hypervisor版本：[[${connectInformation.hypervisorVersion}]]</p>
+                            <button class="btn btn-primary" data-bs-dismiss="modal">
+                                <i class="fas fa-xmark fa-fw">
+                                </i>
+                                关闭窗口
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-model="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>存储池管理</title>
+    <!--    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"/>
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/index}">首页</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/main}">虚拟机基础管理<span class="sr-only">(current)</span></a></li>
+                <li><a th:href="@{/toAddVirtual}">添加虚拟机</a></li>
+                <li><a th:href="@{/img}">镜像管理</a></li>
+                <li><a th:href="@{/toAddImg}">添加镜像</a></li>
+                <li class="active"><a th:href="@{/storagePoolList}">存储池管理</a></li>
+                <li><a th:href="@{/toCreateStoragepool}">添加存储池</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/openOrCloseNetWork(netState=${netState})}" th:inline="text">网络状态：[[${netState}]]</a>
+                </li>
+                <li><a th:href="@{/loginOut}">注销登录</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>name</th>
+                    <th>type</th>
+                    <th>capacity</th>
+                    <th>available</th>
+                    <th>allocation</th>
+                    <th>usage</th>
+                    <th>state</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="storagePool:${storagePoolList}">
+                    <td th:text="${storagePool.name}"></td>
+                    <td th:text="${storagePool.type}"></td>
+
+                    <td th:inline="text">[[${storagePool.capacity}]] GB</td>
+                    <td th:inline="text">[[${storagePool.available}]] GB</td>
+                    <td th:inline="text">[[${storagePool.allocation}]] GB</td>
+
+                    <td th:text="${storagePool.usage}"></td>
+                    <td th:text="${storagePool.state}"></td>
+                    <td>
+                        <div>
+                            <a th:href="@{/deleteStoragePool(name=${storagePool.name})}">删除</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
